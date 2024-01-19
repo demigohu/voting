@@ -1,15 +1,9 @@
-import Image from 'next/image'
-import CreateProposal from '@/components/Create'
-import Vote from '@/components/Vote'
+import CreateProposal from "@/components/Create"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-       <CreateProposal />
-       {/* <Views /> */}
-       <Vote />
-      </div>
-    </main>
+    <div className="max-w-[1200px] min-h-screen mx-auto mt-20 px-10 pb-20">
+      <CreateProposal />
+    </div>
   )
 }

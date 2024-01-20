@@ -262,7 +262,7 @@ const Vote = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110";
+        const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D";
         const contractAbi = VotingContract.abi;
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const contract = new ethers.Contract(
@@ -330,7 +330,7 @@ const Vote = () => {
       setIsVoting(true);
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110";
+      const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D";
       const contractAbi = VotingContract.abi;
       const contract = new ethers.Contract(
         contractAddress,
@@ -369,7 +369,7 @@ const Vote = () => {
       setIsClosing(true);
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110";
+      const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D";
       const contractAbi = VotingContract.abi;
       const contract = new ethers.Contract(
         contractAddress,

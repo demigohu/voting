@@ -9,7 +9,7 @@ const CreateProposal = () => {
   const [provider, setProvider] = useState(null)
   const [contract, setContract] = useState(null)
 
-  const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110"
+  const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D"
   const contractABI = VotingContract.abi
 
   useEffect(() => {

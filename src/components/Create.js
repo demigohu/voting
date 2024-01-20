@@ -68,7 +68,7 @@ const CreateProposal = () => {
   }
 
   return (
-    <div className="card card-base-100 border p-5 shadow-xl w-[50%] mx-auto">
+    <div className="card card-base-100 text-black border p-5 shadow-xl w-[50%] mx-auto">
       <h1 className="text-xl font-bold">Create New Proposal</h1>
       <form className="mt-5 ">
         <div className="">
@@ -76,7 +76,7 @@ const CreateProposal = () => {
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-white"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -94,7 +94,7 @@ const CreateProposal = () => {
             <div key={index}>
               <input
                 type="text"
-                className="input input-bordered w-full mb-3"
+                className="input input-bordered w-full mb-3 bg-white"
                 value={option}
                 onChange={(e) => handleOptionChange(e, index)}
               />

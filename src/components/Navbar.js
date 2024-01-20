@@ -90,9 +90,9 @@ function Navbar() {
               className="w-full h-full"
             />
           </div>
-          <p className="text-xl font-bold text-black">OVRS</p>
+          <p className="text-xl font-bold text-black">Over Vote</p>
         </div>
-        <div className="flex gap-10 font-semibold text-[#333333] ">
+        <div className="flex gap-10 font-semibold text-[#333333]">
           <Link href={"/"} className="hover:text-[#f0f0f0]">
             Home
           </Link>
@@ -131,7 +131,7 @@ function Navbar() {
             </div>
           ) : (
             <button
-              className="btn bg-[#ffd700] hover:bg-[#eccc15] border-none"
+              className="btn bg-[#ffd700] hover:bg-[#eccc15] border-none text-black"
               onClick={connectWallet}
             >
               Connect Wallet

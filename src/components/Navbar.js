@@ -80,7 +80,7 @@ function Navbar() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto px-5 md:px-10 relative overflow-x-hidden">
+    <div className="max-w-[1200px] mx-auto px-5 md:px-10 relative">
       <div className="flex justify-between items-center py-3 md:py-5">
         <div className="flex items-center gap-2">
           <div className="w-[50px] h-[50px] rounded-full overflow-hidden">
@@ -143,7 +143,7 @@ function Navbar() {
         <div className="lg:hidden">
           <Hamburger color="black" toggled={isOpen} toggle={setOpen} />
           {isOpen ? (
-            <div className="flex flex-col items-center gap-10 font-semibold absolute right-0 bg-[#bfd9fe] w-full z-50 py-10 top-full transition-all">
+            <div className="flex flex-col items-center gap-10 font-semibold absolute left-0 bg-[#bfd9fe] w-full z-50 py-10 top-full transition-all">
               <Link
                 href={"/"}
                 className="text-black hover:text-[#f0f0f0]"
@@ -202,7 +202,7 @@ function Navbar() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-10 font-semibold absolute bg-[#bfd9fe] w-full z-50 py-10 -right-[100%] transition-all">
+            <div className="flex flex-col items-center gap-10 font-semibold absolute bg-[#bfd9fe] w-full z-50 py-10 -left-[100%] transition-all">
               <Link href={"/"} className="hover:text-[#f0f0f0]">
                 Home
               </Link>

@@ -141,26 +141,26 @@ function Navbar() {
           )}
         </div>
         <div className="lg:hidden">
-          <Hamburger toggled={isOpen} toggle={setOpen} />
+          <Hamburger color="black" toggled={isOpen} toggle={setOpen} />
           {isOpen ? (
             <div className="flex flex-col items-center gap-10 font-semibold absolute right-0 bg-[#bfd9fe] w-full z-50 py-10 top-full transition-all">
               <Link
                 href={"/"}
-                className="hover:text-[#f0f0f0]"
+                className="text-black hover:text-[#f0f0f0]"
                 onClick={() => setOpen(false)}
               >
                 Home
               </Link>
               <Link
                 href={"vote"}
-                className="hover:text-[#f0f0f0]"
+                className="text-black hover:text-[#f0f0f0]"
                 onClick={() => setOpen(false)}
               >
                 Vote
               </Link>
               <Link
                 href={"faucet"}
-                className="hover:text-[#f0f0f0]"
+                className="text-black hover:text-[#f0f0f0]"
                 onClick={() => setOpen(false)}
               >
                 Faucet

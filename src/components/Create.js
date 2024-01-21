@@ -69,10 +69,10 @@ const CreateProposal = () => {
 
   return (
     <div className="card card-base-100 border p-5 md:p-10 shadow-xl md:w-[70%] lg:w-[50%] mx-auto">
-      <h1 className="text-xl font-bold">Create New Proposal</h1>
+      <h1 className="text-xl font-bold text-black">Create New Proposal</h1>
       <form className="mt-5 ">
         <div className="">
-          <label>Description:</label>
+          <label className="text-black">Description:</label>
           <input
             type="text"
             placeholder="Type here"
@@ -89,7 +89,7 @@ const CreateProposal = () => {
           >
             Add Option
           </button>
-          <label>Options:</label>
+          <label className="text-black">Options:</label>
           {optionsArray.map((option, index) => (
             <div key={index}>
               <input

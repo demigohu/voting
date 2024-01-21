@@ -8,7 +8,7 @@ import Loading from "@/app/loading"
 const Vote = () => {
   const [proposals, setProposals] = useState([])
   const [selectedProposal, setSelectedProposal] = useState(null)
-  const [selectedOption, setSelectedOption] = useState("")
+  const [selectedOption, setSelectedOption] = useState({})
   const [isVoting, setIsVoting] = useState(false)
   const [votingResults, setVotingResults] = useState([])
   const [isClosing, setIsClosing] = useState(false)
@@ -16,7 +16,7 @@ const Vote = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110"
+        const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D"
         const contractAbi = VotingContract.abi
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const contract = new ethers.Contract(
@@ -50,19 +50,12 @@ const Vote = () => {
 
         if (selectedProposal) {
           const proposalId = selectedProposal.id
-
-          // If the proposal is already in the selectedOption state,
-          // use its existing selected option; otherwise, use the first option.
           const initialOption =
             selectedOption[proposalId] || selectedProposal.options[0]
-
-          // Ensure only one option is selected for the proposal
-          const updatedSelectedOption = { [proposalId]: initialOption }
-
-          setSelectedOption((prevSelectedOption) => ({
-            ...prevSelectedOption,
-            ...updatedSelectedOption,
-          }))
+          setSelectedOption({
+            ...selectedOption,
+            [proposalId]: initialOption,
+          })
         }
       } catch (error) {
         console.error("Error fetching data:", error.message)
@@ -74,6 +67,9 @@ const Vote = () => {
 
   const handleVote = async (proposalId) => {
     try {
+      console.log("Selected Proposal in handleVote:", selectedProposal)
+      console.log("Selected Option in handleVote:", selectedOption)
+
       if (!selectedProposal) {
         console.error("Selected proposal is null")
         return
@@ -87,7 +83,7 @@ const Vote = () => {
       setIsVoting(true)
 
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110"
+      const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D"
       const contractAbi = VotingContract.abi
       const contract = new ethers.Contract(
         contractAddress,
@@ -124,7 +120,7 @@ const Vote = () => {
       setIsClosing(true)
 
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110"
+      const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D"
       const contractAbi = VotingContract.abi
       const contract = new ethers.Contract(
         contractAddress,
@@ -147,7 +143,9 @@ const Vote = () => {
 
   return (
     <div>
-      <h1 className="text-2xl text-center mb-10 font-bold">Halaman Voting</h1>
+      <h1 className="text-2xl text-center mb-10 font-bold text-black">
+        Voting Page
+      </h1>
       {proposals.length === 0 ? (
         <Loading />
       ) : (

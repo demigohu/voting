@@ -9,7 +9,7 @@ const CreateProposal = () => {
   const [provider, setProvider] = useState(null)
   const [contract, setContract] = useState(null)
 
-  const contractAddress = "0x7D413BcB64be4CB478014B1D86C70b66964D1110"
+  const contractAddress = "0x5925D08f71aDB695163c799782c34958e3E42b7D"
   const contractABI = VotingContract.abi
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const CreateProposal = () => {
           <input
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full"
+            className="input input-bordered w-full bg-white"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -94,7 +94,7 @@ const CreateProposal = () => {
             <div key={index}>
               <input
                 type="text"
-                className="input input-bordered w-full mb-3"
+                className="input input-bordered w-full mb-3 bg-white"
                 value={option}
                 onChange={(e) => handleOptionChange(e, index)}
               />

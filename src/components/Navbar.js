@@ -80,7 +80,7 @@ function Navbar() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto px-5 md:px-10 relative">
+    <div className="max-w-[1200px] mx-auto px-5 md:px-10 relative overflow-x-hidden">
       <div className="flex justify-between items-center py-3 md:py-5">
         <div className="flex items-center gap-2">
           <div className="w-[50px] h-[50px] rounded-full overflow-hidden">

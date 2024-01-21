@@ -55,8 +55,8 @@ const Faucet = () => {
   }
 
   return (
-    <div className="card border shadow-md w-[50%] mx-auto">
-      <div className="card-body flex-grow-0">
+    <div className="card border shadow-md w-full md:w-[80%] lg:w-1/2 mt-10 mx-auto">
+      <div className="card-body flex-grow-0 p-5 md:p-10 text-black">
         <h2 className="card-title mb-5">Faucet Page</h2>
         <p>Recipient Address :</p>
         <input
@@ -71,8 +71,11 @@ const Faucet = () => {
           onClick={requestFaucet}
           className="btn btn-neutral text-white mt-5"
         >
-          Request 10 Ether
+          Request 10 OVR
         </button>
+        <p className="font-bold text-red-600 text-center">
+          The faucet is slow, be patience dont spam click
+        </p>
       </div>
     </div>
   )

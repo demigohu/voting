@@ -4,4 +4,5 @@
 
 body {
   background-image: radial-gradient(circle, #df89b5 0%, #bfd9fe 100%);
+  overflow-x: hidden !important;
 }

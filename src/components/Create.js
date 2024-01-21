@@ -68,7 +68,7 @@ const CreateProposal = () => {
   }
 
   return (
-    <div className="card card-base-100 border p-5 shadow-xl w-[50%] mx-auto">
+    <div className="card card-base-100 border p-5 md:p-10 shadow-xl md:w-[70%] lg:w-[50%] mx-auto">
       <h1 className="text-xl font-bold">Create New Proposal</h1>
       <form className="mt-5 ">
         <div className="">

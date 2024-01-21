@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 import VotingContract from "../contracts/Voting.json"
-import Loading from "@/app/Loading"
+import Loading from "@/app/loading"
 
+// ...
 const Vote = () => {
   const [proposals, setProposals] = useState([])
   const [selectedProposal, setSelectedProposal] = useState(null)
@@ -47,10 +48,21 @@ const Vote = () => {
         setProposals(proposalsData)
         setVotingResults(resultsData)
 
-        // Jika ada proposal yang terpilih, atur nilai awal selectedOption
         if (selectedProposal) {
-          const initialOption = selectedProposal.options[0]
-          setSelectedOption(initialOption)
+          const proposalId = selectedProposal.id
+
+          // If the proposal is already in the selectedOption state,
+          // use its existing selected option; otherwise, use the first option.
+          const initialOption =
+            selectedOption[proposalId] || selectedProposal.options[0]
+
+          // Ensure only one option is selected for the proposal
+          const updatedSelectedOption = { [proposalId]: initialOption }
+
+          setSelectedOption((prevSelectedOption) => ({
+            ...prevSelectedOption,
+            ...updatedSelectedOption,
+          }))
         }
       } catch (error) {
         console.error("Error fetching data:", error.message)
@@ -60,10 +72,8 @@ const Vote = () => {
     fetchData()
   }, [selectedProposal])
 
-  const handleVote = async () => {
+  const handleVote = async (proposalId) => {
     try {
-      console.log("Selected Proposal in handleVote:", selectedProposal)
-      console.log("Selected Option in handleVote:", selectedOption)
       if (!selectedProposal) {
         console.error("Selected proposal is null")
         return
@@ -85,10 +95,10 @@ const Vote = () => {
         provider.getSigner()
       )
 
-      await contract.vote(selectedProposal.id, selectedOption)
+      await contract.vote(proposalId, selectedOption[proposalId])
 
       console.log(
-        `Voted for proposal ${selectedProposal.id} with option ${selectedOption}`
+        `Voted for proposal ${proposalId} with option ${selectedOption[proposalId]}`
       )
       setIsVoting(false)
 
@@ -99,7 +109,7 @@ const Vote = () => {
     }
   }
 
-  const handleCloseVoting = async () => {
+  const handleCloseVoting = async (proposalId) => {
     try {
       if (!selectedProposal) {
         console.error("Selected proposal is null")
@@ -122,9 +132,9 @@ const Vote = () => {
         provider.getSigner()
       )
 
-      await contract.closeVoting(selectedProposal.id)
+      await contract.closeVoting(proposalId)
 
-      console.log(`Closed voting for proposal ${selectedProposal.id}`)
+      console.log(`Closed voting for proposal ${proposalId}`)
       setIsClosing(false)
 
       fetchData()
@@ -133,15 +143,6 @@ const Vote = () => {
       setIsClosing(false)
     }
   }
-
-  const handleCardClick = (proposal) => {
-    // Fungsi ini akan dipanggil saat card proposal diklik
-    setSelectedProposal(proposal)
-    // Atur nilai opsi jika diperlukan
-    const initialOption = proposal.options[0]
-    setSelectedOption(initialOption)
-  }
-
   console.log(selectedOption)
 
   return (
@@ -150,84 +151,96 @@ const Vote = () => {
       {proposals.length === 0 ? (
         <Loading />
       ) : (
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {proposals.map((proposal) => (
             <div
               key={proposal.id}
               className="card bg-transparent border shadow-xl"
             >
-              <div key={proposal.id} onClick={() => handleCardClick(proposal)}>
-                <div className="card-body">
-                  <h2 className="text-lg font-bold">
-                    Description : {proposal.description}
-                  </h2>
+              <div className="card-body p-5 lg:p-10">
+                <h2 className="text-lg font-bold">
+                  Description : {proposal.description}
+                </h2>
 
-                  {proposal.isOpen && (
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault()
-                        setSelectedProposal(proposal)
-                        handleVote()
-                      }}
-                    >
-                      <label>Pilih Opsi :</label>
-                      <div className="flex gap-5">
-                        <select
-                          value={selectedOption}
-                          onChange={(e) => setSelectedOption(e.target.value)}
-                          className="select select-bordered w-full"
-                        >
-                          {proposal.options.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
-                            </option>
-                          ))}
-                        </select>
-                        <button
-                          type="submit"
-                          className="btn w-32 border-none bg-[#4a86e7] text-white hover:bg-[#4072c3]"
-                          disabled={isVoting}
-                        >
-                          {isVoting ? "Voting..." : "Vote"}
-                        </button>
-                      </div>
-                    </form>
-                  )}
+                {proposal.isOpen && (
+                  <form
+                    key={proposal.id}
+                    onSubmit={(e) => {
+                      e.preventDefault()
+                      setSelectedProposal(proposal)
+                      handleVote(proposal.id)
+                    }}
+                  >
+                    <label>Pilih Opsi :</label>
+                    <div className="flex gap-5">
+                      <select
+                        value={selectedOption[proposal.id] || ""}
+                        onChange={(e) =>
+                          setSelectedOption({
+                            ...selectedOption,
+                            [proposal.id]: e.target.value,
+                          })
+                        }
+                        className="select select-bordered w-full"
+                      >
+                        <option disabled value={""}>
+                          Who shot first?
+                        </option>
+                        {proposal.options.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type="submit"
+                        className="btn w-32 border-none bg-[#4a86e7] text-white hover:bg-[#4072c3]"
+                        disabled={isVoting}
+                      >
+                        {isVoting ? "Voting..." : "Vote"}
+                      </button>
+                    </div>
+                  </form>
+                )}
 
-                  <p>Pembuat Proposal: {proposal.creator}</p>
-
-                  <p>Hasil Voting:</p>
-                  <ul>
-                    {votingResults
-                      .filter((result) => result.proposalId === proposal.id)
-                      .map((result) =>
-                        result.results.options.map((option, optionIndex) => (
-                          <li key={optionIndex}>
-                            {option}:{" "}
-                            {result.results.votes[optionIndex].toString()} suara
-                          </li>
-                        ))
-                      )}
-                  </ul>
-
-                  {proposal.creator && (
-                    <button
-                      onClick={() => {
-                        setSelectedProposal(proposal)
-                        handleCloseVoting(proposal.id)
-                      }}
-                      disabled={isVoting}
-                      className="btn border-none bg-red-500 text-white hover:bg-red-600"
-                    >
-                      {isVoting ? "Menutup..." : "Tutup Voting"}
-                    </button>
-                  )}
-
-                  <p className="font-bold">
-                    Status Voting:{" "}
-                    {proposal.isOpen ? "Masih Dibuka" : "Sudah Ditutup"}
+                <div className="overflow-hidden">
+                  <p>Pembuat Proposal:</p>
+                  <p className="mb-2" style={{ wordWrap: "break-word" }}>
+                    {proposal.creator}
                   </p>
                 </div>
+
+                <p>Hasil Voting:</p>
+                <ul>
+                  {votingResults
+                    .filter((result) => result.proposalId === proposal.id)
+                    .map((result) =>
+                      result.results.options.map((option, optionIndex) => (
+                        <li key={optionIndex}>
+                          {option}:{" "}
+                          {result.results.votes[optionIndex].toString()} suara
+                        </li>
+                      ))
+                    )}
+                </ul>
+
+                {proposal.creator && (
+                  <button
+                    onClick={() => {
+                      setSelectedProposal(proposal)
+                      handleCloseVoting(proposal.id)
+                    }}
+                    disabled={isVoting}
+                    className="btn border-none bg-red-500 text-white hover:bg-red-600"
+                  >
+                    {isVoting ? "Menutup..." : "Tutup Voting"}
+                  </button>
+                )}
+
+                <p className="font-bold">
+                  Status Voting:{" "}
+                  {proposal.isOpen ? "Masih Dibuka" : "Sudah Ditutup"}
+                </p>
               </div>
             </div>
           ))}

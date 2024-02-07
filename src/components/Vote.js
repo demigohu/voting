@@ -151,12 +151,9 @@ const Vote = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {proposals.map((proposal) => (
-            <div
-              key={proposal.id}
-              className="card bg-transparent border shadow-xl"
-            >
+            <div key={proposal.id} className="card glassmorpishm">
               <div className="card-body p-5 lg:p-10">
-                <h2 className="text-lg font-bold">
+                <h2 className="text-lg font-bold text-black">
                   Description : {proposal.description}
                 </h2>
 
@@ -169,7 +166,7 @@ const Vote = () => {
                       handleVote(proposal.id)
                     }}
                   >
-                    <label>Pilih Opsi :</label>
+                    <label className="text-black">Pilih Opsi :</label>
                     <div className="flex gap-5">
                       <select
                         value={selectedOption[proposal.id] || ""}
@@ -179,7 +176,7 @@ const Vote = () => {
                             [proposal.id]: e.target.value,
                           })
                         }
-                        className="select select-bordered w-full"
+                        className="select select-bordered w-full text-black bg-white"
                       >
                         <option disabled value={""}>
                           Who shot first?
@@ -201,15 +198,15 @@ const Vote = () => {
                   </form>
                 )}
 
-                <div className="overflow-hidden">
+                <div className="overflow-hidden text-black">
                   <p>Pembuat Proposal:</p>
                   <p className="mb-2" style={{ wordWrap: "break-word" }}>
                     {proposal.creator}
                   </p>
                 </div>
 
-                <p>Hasil Voting:</p>
-                <ul>
+                <p className="text-black">Hasil Voting:</p>
+                <ul className="text-black">
                   {votingResults
                     .filter((result) => result.proposalId === proposal.id)
                     .map((result) =>
@@ -235,7 +232,7 @@ const Vote = () => {
                   </button>
                 )}
 
-                <p className="font-bold">
+                <p className="font-bold text-black">
                   Status Voting:{" "}
                   {proposal.isOpen ? "Masih Dibuka" : "Sudah Ditutup"}
                 </p>

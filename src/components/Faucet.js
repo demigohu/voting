@@ -14,7 +14,7 @@ const Faucet = () => {
       }
 
       const privateKey =
-        "d2aae833d170cc00e0729556f197997657b0f7ade528357e15b599f04399ba1c" // Ganti dengan private key Anda
+        "" // Ganti dengan private key Anda
       const toAddress = recipientAddress.trim()
       const amountToSend = ethers.utils.parseEther("10.0")
 
